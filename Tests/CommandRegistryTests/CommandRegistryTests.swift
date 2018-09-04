@@ -8,6 +8,6 @@ final class CommandRegistryTests: XCTestCase {
     }
 
     static var allTests = [
-        ("testExample", testExample),
+        ("testExample", testExample)
     ]
 }
