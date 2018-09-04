@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Logger",
+        "repositoryURL": "https://github.com/eneko/Logger.git",
+        "state": {
+          "branch": "master",
+          "revision": "146a17c68a442859ec409b2ae1a23d1913d48c5d",
+          "version": null
+        }
+      },
+      {
+        "package": "SwiftPM",
+        "repositoryURL": "https://github.com/apple/swift-package-manager.git",
+        "state": {
+          "branch": null,
+          "revision": "6983434787dec4e543e9d398a0a9acf63ccd4da1",
+          "version": "0.2.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
