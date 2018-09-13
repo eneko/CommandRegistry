@@ -20,9 +20,15 @@ public struct CommandRegistry {
         do {
             let parsedArguments = try parse()
             try process(arguments: parsedArguments)
-        } catch let error as ArgumentParserError {
+        }
+        catch let error as ArgumentParserError {
             Logger.error.log(error.description)
-        } catch let error {
+        }
+        catch DecodingError.keyNotFound(_, let context) {
+            Logger.error.log(context.debugDescription)
+            Logger.error.log(context.codingPath.description)
+        }
+        catch let error {
             Logger.error.log(error.localizedDescription)
         }
     }
