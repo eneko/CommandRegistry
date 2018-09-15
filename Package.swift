@@ -7,7 +7,7 @@ let package = Package(
         .library(name: "CommandRegistry", targets: ["CommandRegistry"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/eneko/Logger.git", .branch("master")),
+        .package(url: "https://github.com/eneko/Logger.git", from: "0.0.1"),
         .package(url: "https://github.com/apple/swift-package-manager.git", from: "0.1.0"),
     ],
     targets: [
