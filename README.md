@@ -128,6 +128,6 @@ dependencies([
 ## Why yet another argument and command parsing library?
 When I started writing command line tools in Swift using Swift Package Manager, I found several packages that provided functionality to parse command line arguments, flags and subcommands. However, I found these libraries complex and hard to use.
 
-Then I realized Swift Package Manager already provided this and many other common functionality that most command line tools normaly need. Thus, `CommandRegistry` is not "yet another argument and command parsing library", but a thin layer built on top of Swift Package Manager `ArgumentParser` class.
+Then I realized [Swift Package Manager](https://github.com/apple/swift-package-manager/tree/master/Sources) already provided this and many other common functionality that most command line tools normaly need. Thus, `CommandRegistry` is not "yet another argument and command parsing library", but a thin layer built on top of Swift Package Manager [`ArgumentParser`](https://github.com/apple/swift-package-manager/blob/master/Sources/Utility/ArgumentParser.swift) class.
 
-I'd recommend you take a look at all the classes and types included with Swift Package Manager (the `Utility` module could be a good strting point), and start using those in your projects.
+I'd recommend you take a look at all the classes and types included with Swift Package Manager (the [`Utility`](https://github.com/apple/swift-package-manager/tree/master/Sources/Utility) module could be a good strting point), and start using those in your projects.
