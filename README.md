@@ -85,6 +85,29 @@ This is commandB
 The number entered is 10, it's square is 100.
 ```
 
+### Auto-generated `--help`
+By using `CommandRegistry` you get automatically generated help for your command line tool and all its subcommands
+
+```
+$ mytool --help
+OVERVIEW: My awesome command line tool
+
+USAGE: mytool <subcommand> <options>
+
+SUBCOMMANDS:
+  commandA     Does something awesome
+  commandB     Does something awesome in a different way
+```
+
+```
+$ mytool commandB --help
+OVERVIEW: Does something awesome in a different way
+
+OPTIONS:
+  --number, -n   Number argument (optional)
+```
+
+
 ## Installation
 
 1. Add both CommandRegstry and SwiftPM depedencies to your `Package.swift`:
