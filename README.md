@@ -1,4 +1,4 @@
-# CommandRegistry
+# CommandRegistry 💻
 Beautifully handle subcommands in your SwiftPM command line tool.
 
 ```
@@ -12,8 +12,8 @@ SUBCOMMANDS:
   commandB     Does something awesome in a different way
 ```
 
-## Usage
-In your `main.swift`
+## Usage 🛠
+Keep your `main.swift` nice and tidy:
 
 ```swift
 import CommandRegistry
@@ -24,7 +24,7 @@ commands.register(command: CommandB.self)
 commands.run()
 ```
 
-### Define your subcommands as classes or structs
+### Define your subcommands as classes or structs ⌨️
 
 ```swift
 import Utility
@@ -49,7 +49,7 @@ $ mytool commandA
 This is CommandA
 ```
 
-### Easily define and process strongly-typed command arguments
+### Easily define and process strongly-typed command arguments 😎
 
 ```swift
 import Utility
@@ -85,7 +85,7 @@ This is commandB
 The number entered is 10, it's square is 100.
 ```
 
-### Auto-generated `--help`
+### Auto-generated `--help` 👌
 By using `CommandRegistry` you get automatically generated help for your command line tool and all its subcommands
 
 ```
@@ -108,7 +108,7 @@ OPTIONS:
 ```
 
 
-## Installation
+## Installation 🚀
 
 1. Add both CommandRegstry and SwiftPM depedencies to your `Package.swift`:
 ```swift
@@ -125,7 +125,7 @@ dependencies([
 
 3. Add `import CommandRegistry` and `import Utility` in your source files, as needed.
 
-## Why yet another argument and command parsing library?
+## Why yet another argument and command parsing library? 🤔
 When I started writing command line tools in Swift using Swift Package Manager, I found several packages that provided functionality to parse command line arguments, flags and subcommands. However, I found these libraries complex and hard to use.
 
 Then I realized [Swift Package Manager](https://github.com/apple/swift-package-manager/tree/master/Sources) already provided this and many other common functionality that most command line tools normaly need. Thus, `CommandRegistry` is not "yet another argument and command parsing library", but a thin layer built on top of Swift Package Manager [`ArgumentParser`](https://github.com/apple/swift-package-manager/blob/master/Sources/Utility/ArgumentParser.swift) class.
