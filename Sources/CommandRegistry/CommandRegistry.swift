@@ -5,8 +5,8 @@ import Logger
 
 public struct CommandRegistry {
 
-    private let parser: ArgumentParser
-    private var commands: [Command] = []
+    let parser: ArgumentParser
+    var commands: [Command] = []
 
     public init(usage: String, overview: String) {
         parser = ArgumentParser(usage: usage, overview: overview)
@@ -16,10 +16,10 @@ public struct CommandRegistry {
         commands.append(command.init(parser: parser))
     }
 
-    public func run() {
+    public func run(arguments: [String] = ProcessInfo.processInfo.arguments) {
         do {
-            let parsedArguments = try parse()
-            try process(arguments: parsedArguments)
+            let parsedArguments = try parse(arguments: arguments)
+            try process(parsedArguments: parsedArguments)
         }
         catch let error as ArgumentParserError {
             Logger.error.log(error.description)
@@ -33,18 +33,44 @@ public struct CommandRegistry {
         }
     }
 
-    private func parse() throws -> ArgumentParser.Result {
-        let arguments = Array(ProcessInfo.processInfo.arguments.dropFirst())
+    func parse(arguments: [String]) throws -> ArgumentParser.Result {
+        let arguments = Array(arguments.dropFirst())
         return try parser.parse(arguments)
     }
 
-    private func process(arguments: ArgumentParser.Result) throws {
-        guard let subparser = arguments.subparser(parser),
+    func process(parsedArguments: ArgumentParser.Result) throws {
+        guard let subparser = parsedArguments.subparser(parser),
             let command = commands.first(where: { $0.command == subparser }) else {
                 parser.printUsage(on: stdoutStream)
                 return
         }
-        try command.run(with: arguments)
+        try command.run(with: parsedArguments)
     }
 
+}
+
+// MARK: Sugar syntax
+
+struct BasicCommand: Command {
+    let command: String
+    let overview: String
+    let handler: () throws -> Void
+    init(command: String, overview: String, handler: @escaping () throws -> Void) {
+        self.command = command
+        self.overview = overview
+        self.handler = handler
+    }
+    init(parser: ArgumentParser) {
+        fatalError("Not supported")
+    }
+    func run(with arguments: ArgumentParser.Result) throws {
+        try handler()
+    }
+}
+
+extension CommandRegistry {
+    public mutating func on(command: String, overview: String = "", handler: @escaping () throws -> Void) rethrows {
+        commands.append(BasicCommand(command: command, overview: overview, handler: handler))
+        parser.add(subparser: command, overview: overview)
+    }
 }

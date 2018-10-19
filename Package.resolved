@@ -5,9 +5,9 @@
         "package": "Logger",
         "repositoryURL": "https://github.com/eneko/Logger.git",
         "state": {
-          "branch": "master",
+          "branch": null,
           "revision": "146a17c68a442859ec409b2ae1a23d1913d48c5d",
-          "version": null
+          "version": "0.0.2"
         }
       },
       {

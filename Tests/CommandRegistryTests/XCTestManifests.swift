@@ -1,9 +1,16 @@
 import XCTest
 
+extension CommandRegistryTests {
+    static let __allTests = [
+        ("testFooCommand", testFooCommand),
+        ("testRegister", testRegister),
+    ]
+}
+
 #if !os(macOS)
-public func allTests() -> [XCTestCaseEntry] {
+public func __allTests() -> [XCTestCaseEntry] {
     return [
-        testCase(CommandRegistryTests.allTests)
+        testCase(CommandRegistryTests.__allTests),
     ]
 }
 #endif
