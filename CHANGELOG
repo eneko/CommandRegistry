@@ -1,0 +1,29 @@
+
+# Master
+
+### Breaking
+- None
+
+### Other
+- None
+
+
+# 0.1.0
+
+### Breaking
+- Introduce capability of writting subcommands to any depth level
+- Command instances must be classes in order to allow subcommands
+- Command instances must define an empty array of subcommands
+- Command instances must retain a reference to their argument sub-parser
+
+
+# 0.0.2
+
+### Other
+- Update Logger dependency
+
+
+# 0.0.1
+
+### Other
+- Initial release
