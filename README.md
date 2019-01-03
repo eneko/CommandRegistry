@@ -1,6 +1,14 @@
 # CommandRegistry 💻
 Beautifully handle subcommands in your SwiftPM command line tool.
 
+![Release](https://img.shields.io/github/release/eneko/CommandRegistry.svg)
+![Swift 4.0+](https://img.shields.io/badge/Swift-4.0+-orange.svg)
+[![Build Status](https://travis-ci.org/eneko/CommandRegistry.svg?branch=master)](https://travis-ci.org/eneko/CommandRegistry)
+[![codecov](https://codecov.io/gh/eneko/CommandRegistry/branch/master/graph/badge.svg)](https://codecov.io/gh/eneko/CommandRegistry)
+[![Swift Package Manager Compatible](https://img.shields.io/badge/spm-compatible-brightgreen.svg)](https://swift.org/package-manager)
+![Linux Compatible](https://img.shields.io/badge/linux-compatible%20🐧-brightgreen.svg)
+
+
 ```
 $ mytool
 OVERVIEW: My awesome command line tool
