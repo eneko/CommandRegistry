@@ -12,8 +12,18 @@ public struct CommandRegistry {
         parser = ArgumentParser(usage: usage, overview: overview)
     }
 
-    public mutating func register(command: Command.Type) {
-        commands.append(command.init(parser: parser))
+    @discardableResult
+    public mutating func register(command commandType: Command.Type) -> Command {
+        let command = commandType.init(parser: parser)
+        commands.append(command)
+        return command
+    }
+
+    @discardableResult
+    public mutating func register(subcommand commandType: Command.Type, parent: Command) -> Command {
+        let subcommand = commandType.init(parser: parent.subparser)
+        parent.subcommands.append(subcommand)
+        return subcommand
     }
 
     public func run() {
@@ -39,12 +49,23 @@ public struct CommandRegistry {
     }
 
     private func process(arguments: ArgumentParser.Result) throws {
-        guard let subparser = arguments.subparser(parser),
-            let command = commands.first(where: { $0.command == subparser }) else {
-                parser.printUsage(on: stdoutStream)
-                return
+        var parser = self.parser
+        var commands = self.commands
+        var command: Command?
+
+        // Navigate subcommands to find the last subcommand entered
+        while let commandName = arguments.subparser(parser), let match = commands.first(where: { $0.command == commandName }) {
+            parser = match.subparser
+            commands = match.subcommands
+            command = match
         }
-        try command.run(with: arguments)
+
+        if let command = command {
+            try command.run(with: arguments)
+        }
+        else {
+            parser.printUsage(on: stdoutStream)
+        }
     }
 
 }
