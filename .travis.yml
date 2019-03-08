@@ -55,8 +55,7 @@ jobs:
       os: osx
       osx_image: xcode10
       script:
-      - cd Tests/TestTool
-      - swift test
+      - cd Tests/TestTool && swift test
     - stage: Continuous Integration
       name: Code Coverage (Swift 4.1)
       os: osx
