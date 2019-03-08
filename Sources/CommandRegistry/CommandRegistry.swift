@@ -8,22 +8,7 @@ public struct CommandRegistry {
     private let parser: ArgumentParser
     private var commands: [Command] = []
 
-//    static var version = "0.0.0"
-
-    public var version: String? {
-//        get {
-//            return CommandRegistry.version
-//        }
-//        set {
-//            CommandRegistry.version = newValue
-//            parser.
-//        }
-        didSet {
-
-        }
-    }
-
-//    var versionFlag: OptionArgument<Bool>
+    public var version: String?
 
     public init(usage: String, overview: String) {
         parser = ArgumentParser(usage: usage, overview: overview)

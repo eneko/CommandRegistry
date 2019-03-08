@@ -5,8 +5,8 @@
         "package": "CommandRegistry",
         "repositoryURL": "/Users/enekoalonso/dev/eneko/CommandRegistry",
         "state": {
-          "branch": "master",
-          "revision": "236d314111dde7f868daa1d1c7254950110466e9",
+          "branch": "feature/upgrade-command",
+          "revision": "42a49d5d6591798d323d27b989519c38fc784a27",
           "version": null
         }
       },
