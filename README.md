@@ -26,10 +26,9 @@ Keep your `main.swift` nice and tidy:
 ```swift
 import CommandRegistry
 
-var commands = CommandRegistry(usage: "<subcommand> <options>", overview: "My awesome command line tool")
-commands.register(command: CommandA.self)
-commands.register(command: CommandB.self)
-commands.run()
+var program = CommandRegistry(usage: "<subcommand> <options>", overview: "My awesome command line tool")
+program.register(command: CommandA.self)
+program.run()
 ```
 
 ### Define your subcommands as classes or structs ⌨️
@@ -58,6 +57,15 @@ This is CommandA
 ```
 
 ### Easily define and process strongly-typed command arguments 😎
+
+```swift
+import CommandRegistry
+
+var program = CommandRegistry(usage: "<subcommand> <options>", overview: "My awesome command line tool")
+program.register(command: CommandA.self)
+program.register(command: CommandB.self) // <-- New command
+program.run()
+```
 
 ```swift
 import Utility
@@ -113,6 +121,23 @@ OVERVIEW: Does something awesome in a different way
 
 OPTIONS:
   --number, -n   Number argument (optional)
+```
+
+### Auto-generated `--version` 🔢
+
+```swift
+import CommandRegistry
+
+var program = CommandRegistry(usage: "<subcommand> <options>", overview: "My awesome command line tool")
+program.version = "1.0.1"
+program.register(command: CommandA.self)
+program.register(command: CommandB.self)
+program.run()
+```
+
+```
+$ mytool --version
+1.0.1
 ```
 
 
