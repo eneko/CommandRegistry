@@ -16,6 +16,7 @@ final class TestToolTests: XCTestCase {
 
         let process = Process()
         process.executableURL = fooBinary
+        process.arguments = ["--version"]
 
         let pipe = Pipe()
         process.standardOutput = pipe
@@ -26,7 +27,7 @@ final class TestToolTests: XCTestCase {
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let output = String(data: data, encoding: .utf8)
 
-        XCTAssertEqual(output, "Hello, world!\n")
+        XCTAssertEqual(output, "1.0.0\n")
     }
 
     /// Returns path to the built products directory.
