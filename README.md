@@ -41,8 +41,11 @@ class CommandA: Command {
     let command = "commandA"
     let overview = "Does something awesome"
 
+    let subparser: ArgumentParser
+    var subcommands: [Command] = []
+
     required init(parser: ArgumentParser) {
-        _ = parser.add(subparser: command, overview: overview)
+        subparser = parser.add(subparser: command, overview: overview)
     }
 
     func run(with arguments: ArgumentParser.Result) throws {
@@ -75,11 +78,14 @@ class CommandB: Command {
     let command = "commandB"
     let overview = "Does something awesome in a different way"
 
+    let subparser: ArgumentParser
+    var subcommands: [Command] = []
+
     // Define an optional (non-required) integer argument
     private var numberArgument: OptionArgument<Int>
 
     required init(parser: ArgumentParser) {
-        let subparser = parser.add(subparser: command, overview: overview)
+        subparser = parser.add(subparser: command, overview: overview)
         numberArgument = subparser.add(option: "--number", shortName: "-n", kind: Int.self, usage: "Number argument (optional)")
     }
 
