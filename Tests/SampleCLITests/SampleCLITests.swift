@@ -1,5 +1,4 @@
 import XCTest
-import Utility
 import CommandRegistry
 
 var output = [String: String]()

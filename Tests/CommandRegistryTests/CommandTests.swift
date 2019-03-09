@@ -1,7 +1,6 @@
 import XCTest
 import CommandRegistry
 
-
 class FooCommand: Command {
     let command = "foo"
     let overview = "foo"
@@ -28,4 +27,10 @@ final class CommandTests: XCTestCase {
         let instance = FooCommand(parser: parser)
         XCTAssertEqual(instance.overview, "foo")
     }
+
+//    func testPrintUsage() {
+//        let parser = ArgumentParser(usage: "usage", overview: "overview")
+//        let instance = FooCommand(parser: parser)
+//        instance.printUsage(
+//    }
 }
