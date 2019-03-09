@@ -9,6 +9,7 @@ public struct CommandRegistry {
     private var commands: [Command] = []
 
     public var version: String?
+    public var remoteURLForUpgrade: Foundation.URL?
 
     public init(usage: String, overview: String) {
         parser = ArgumentParser(usage: usage, overview: overview)
@@ -52,15 +53,27 @@ public struct CommandRegistry {
         }
     }
 
+    private func addUpgradeFlag() {
+        if remoteURLForUpgrade != nil {
+            _ = parser.add(option: "--upgrade", kind: Bool.self)
+        }
+    }
+
     private func parse() throws -> ArgumentParser.Result {
         let arguments = Array(ProcessInfo.processInfo.arguments.dropFirst())
         return try parser.parse(arguments)
     }
 
     private func process(arguments: ArgumentParser.Result) throws {
-        // Check for default option flags
+        // Handle '--version' flag
         if let version = version, try arguments.get("--version") == true {
             Logger.standard.log(version)
+            return
+        }
+
+        // Handle '--upgrade' flag
+        if let repo = remoteURLForUpgrade, try arguments.get("--upgrade") == true {
+            try UpgradeController().upgradeToLatestRelease(repoURL: repo)
             return
         }
 
