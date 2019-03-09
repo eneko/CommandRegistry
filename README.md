@@ -26,10 +26,9 @@ Keep your `main.swift` nice and tidy:
 ```swift
 import CommandRegistry
 
-var commands = CommandRegistry(usage: "<subcommand> <options>", overview: "My awesome command line tool")
-commands.register(command: CommandA.self)
-commands.register(command: CommandB.self)
-commands.run()
+var program = CommandRegistry(usage: "<subcommand> <options>", overview: "My awesome command line tool")
+program.register(command: CommandA.self)
+program.run()
 ```
 
 ### Define your subcommands as classes or structs ⌨️
@@ -42,8 +41,11 @@ class CommandA: Command {
     let command = "commandA"
     let overview = "Does something awesome"
 
+    let subparser: ArgumentParser
+    var subcommands: [Command] = []
+
     required init(parser: ArgumentParser) {
-        _ = parser.add(subparser: command, overview: overview)
+        subparser = parser.add(subparser: command, overview: overview)
     }
 
     func run(with arguments: ArgumentParser.Result) throws {
@@ -60,6 +62,15 @@ This is CommandA
 ### Easily define and process strongly-typed command arguments 😎
 
 ```swift
+import CommandRegistry
+
+var program = CommandRegistry(usage: "<subcommand> <options>", overview: "My awesome command line tool")
+program.register(command: CommandA.self)
+program.register(command: CommandB.self) // <-- New command
+program.run()
+```
+
+```swift
 import Utility
 import CommandRegistry
 
@@ -67,11 +78,14 @@ class CommandB: Command {
     let command = "commandB"
     let overview = "Does something awesome in a different way"
 
+    let subparser: ArgumentParser
+    var subcommands: [Command] = []
+
     // Define an optional (non-required) integer argument
     private var numberArgument: OptionArgument<Int>
 
     required init(parser: ArgumentParser) {
-        let subparser = parser.add(subparser: command, overview: overview)
+        subparser = parser.add(subparser: command, overview: overview)
         numberArgument = subparser.add(option: "--number", shortName: "-n", kind: Int.self, usage: "Number argument (optional)")
     }
 
@@ -113,6 +127,23 @@ OVERVIEW: Does something awesome in a different way
 
 OPTIONS:
   --number, -n   Number argument (optional)
+```
+
+### Auto-generated `--version` 🔢
+
+```swift
+import CommandRegistry
+
+var program = CommandRegistry(usage: "<subcommand> <options>", overview: "My awesome command line tool")
+program.version = "1.0.1"
+program.register(command: CommandA.self)
+program.register(command: CommandB.self)
+program.run()
+```
+
+```
+$ mytool --version
+1.0.1
 ```
 
 
