@@ -1,6 +1,6 @@
 import XCTest
-@testable import CommandRegistry
-@testable import Utility
+import CommandRegistry
+
 
 class FooCommand: Command {
     let command = "foo"
@@ -16,18 +16,16 @@ class FooCommand: Command {
     }
 }
 
-final class CommandRegistryTests: XCTestCase {
-    func testFooCommand() {
+final class CommandTests: XCTestCase {
+    func testCommand() {
         let parser = ArgumentParser(usage: "usage", overview: "overview")
         let instance = FooCommand(parser: parser)
         XCTAssertEqual(instance.command, "foo")
+    }
+
+    func testOverview() {
+        let parser = ArgumentParser(usage: "usage", overview: "overview")
+        let instance = FooCommand(parser: parser)
         XCTAssertEqual(instance.overview, "foo")
     }
-
-    func testRegister() {
-        let register = CommandRegistry(usage: "usage", overview: "overview")
-        XCTAssertEqual(register.parser.usage, "usage")
-        XCTAssertEqual(register.parser.overview, "overview")
-    }
-
 }
