@@ -1,7 +1,7 @@
 import XCTest
 import CommandRegistry
 
-final class SampleCLITests: XCTestCase {
+final class SyntaxSugarTests: XCTestCase {
 
     func testSugarNoArguments() {
         var output: String?
@@ -40,23 +40,23 @@ final class SampleCLITests: XCTestCase {
         var output: String?
         var registry = CommandRegistry(usage: "foo", overview: "bar")
         registry.on(command: "foo") { params in
-            output = "foo\(params.count)"
+            output = "foo \(params.count)"
         }
         registry.on(command: "bar") { params in
-            output = "bar\(params.count)"
+            output = "bar \(params.count)"
         }
         registry.on(command: "baz") { params in
-            output = "baz\(params.count)"
+            output = "baz \(params.count)"
         }
 
         registry.run(arguments: ["foo"])
-        XCTAssertEqual(output, "foo0")
+        XCTAssertEqual(output, "foo 0")
 
         registry.run(arguments: ["bar", "1", "2"])
-        XCTAssertEqual(output, "bar2")
+        XCTAssertEqual(output, "bar 2")
 
         registry.run(arguments: ["baz", "tan", "go"])
-        XCTAssertEqual(output, "baz2")
+        XCTAssertEqual(output, "baz 2")
     }
 
 }

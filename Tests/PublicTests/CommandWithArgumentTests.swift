@@ -12,6 +12,7 @@ class CommandWithArgumentTests: XCTestCase {
         registry.run(arguments: ["hello", key])
         XCTAssertEqual(output[key], "Hello World!")
     }
+
 }
 
 class HelloCommand: Command {

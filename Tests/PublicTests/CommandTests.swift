@@ -15,18 +15,17 @@ final class CommandTests: XCTestCase {
         XCTAssertEqual(instance.overview, "foo")
     }
 
-//    func testPrintUsage() {
-//        let stream = BufferedOutputByteStream()
-//        let register = CommandRegistry(usage: "usage", overview: "overview")
-//        register. parser.printUsage(on: stream)
-//        let expectation = """
-//        OVERVIEW: overview
-//
-//        USAGE: xctest usage
-//
-//        """
-//        XCTAssertEqual(stream.bytes.asString, expectation)
-//    }
+    func testPrintCommandUsage() {
+        let stream = BufferedOutputByteStream()
+        let parser = ArgumentParser(usage: "usage", overview: "overview")
+        let instance = FooCommand(parser: parser)
+        instance.printUsage(on: stream)
+        let expectation = """
+        OVERVIEW: foo
+
+        """
+        XCTAssertEqual(stream.bytes.asString, expectation)
+    }
 }
 
 class FooCommand: Command {
