@@ -7,13 +7,18 @@ var output = [String: String]()
 class HelloCommand: Command {
     let command = "hello"
     let overview = "Says hello"
-    var key: PositionalArgument<String>
+    let subparser: ArgumentParser
+    var subcommands: [Command] = []
+
+    var params: PositionalArgument<[String]>
+
     required init(parser: ArgumentParser) {
-        let subparser = parser.add(subparser: command, overview: overview)
-        key = subparser.add(positional: "key", kind: String.self)
+        subparser = parser.add(subparser: command, overview: overview)
+        params = subparser.add(positional: "params", kind: [String].self, optional: true)
     }
     func run(with arguments: ArgumentParser.Result) throws {
-        if let key = arguments.get(self.key) {
+        let params: [String] = arguments.get(self.params) ?? []
+        if let key = params.first {
             output[key] = "Hello World!"
         }
     }
@@ -25,18 +30,21 @@ final class SampleCLITests: XCTestCase {
         let key = UUID().uuidString
         var registry = CommandRegistry(usage: "foo", overview: "bar")
         registry.register(command: HelloCommand.self)
-        registry.run(arguments: ["foo", "hello", key])
+        registry.run(arguments: ["hello", key])
         XCTAssertEqual(output[key], "Hello World!")
     }
 
     func testHelloSugar() {
-        let key = UUID().uuidString
+        var output: String?
         var registry = CommandRegistry(usage: "foo", overview: "bar")
-        registry.on(command: "hello", overview: "Says hello") {
-            output[key] = "Hello World!"
+        registry.on(command: "hello", overview: "Says hello") { params in
+            output = params.first.flatMap { "Hello \($0)!" } ?? "Hello world!"
         }
-        registry.run(arguments: ["foo", "hello"])
-        XCTAssertEqual(output[key], "Hello World!")
+
+        registry.run(arguments: ["hello"])
+        XCTAssertEqual(output, "Hello world!")
+        registry.run(arguments: ["hello", "Bob"])
+        XCTAssertEqual(output, "Hello Bob!")
     }
 
 }

@@ -5,8 +5,11 @@ import XCTest
 class FooCommand: Command {
     let command = "foo"
     let overview = "foo"
+    var subparser: ArgumentParser
+    var subcommands: [Command] = []
+
     required init(parser: ArgumentParser) {
-        parser.add(subparser: command, overview: overview)
+        subparser = parser.add(subparser: command, overview: overview)
     }
     func run(with arguments: ArgumentParser.Result) throws {
         //
