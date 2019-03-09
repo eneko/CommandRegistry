@@ -28,7 +28,6 @@ import CommandRegistry
 
 var program = CommandRegistry(usage: "<subcommand> <options>", overview: "My awesome command line tool")
 program.register(command: CommandA.self)
-program.register(command: CommandB.self)
 program.run()
 ```
 
@@ -61,6 +60,15 @@ This is CommandA
 ```
 
 ### Easily define and process strongly-typed command arguments 😎
+
+```swift
+import CommandRegistry
+
+var program = CommandRegistry(usage: "<subcommand> <options>", overview: "My awesome command line tool")
+program.register(command: CommandA.self)
+program.register(command: CommandB.self) // <-- New command
+program.run()
+```
 
 ```swift
 import Utility
@@ -119,6 +127,23 @@ OVERVIEW: Does something awesome in a different way
 
 OPTIONS:
   --number, -n   Number argument (optional)
+```
+
+### Auto-generated `--version` 🔢
+
+```swift
+import CommandRegistry
+
+var program = CommandRegistry(usage: "<subcommand> <options>", overview: "My awesome command line tool")
+program.version = "1.0.1"
+program.register(command: CommandA.self)
+program.register(command: CommandB.self)
+program.run()
+```
+
+```
+$ mytool --version
+1.0.1
 ```
 
 
