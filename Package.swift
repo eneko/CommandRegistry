@@ -12,7 +12,8 @@ let package = Package(
     ],
     targets: [
         .target(name: "CommandRegistry", dependencies: ["Utility", "Logger"]),
-        .testTarget(name: "CommandRegistryTests", dependencies: ["CommandRegistry"]),
+        .testTarget(name: "InternalTests", dependencies: ["CommandRegistry"]),
+        .testTarget(name: "PublicTests", dependencies: ["CommandRegistry"])
     ]
 )
 

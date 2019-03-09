@@ -5,8 +5,8 @@ import Logger
 
 public struct CommandRegistry {
 
-    private let parser: ArgumentParser
-    private var commands: [Command] = []
+    let parser: ArgumentParser
+    var commands: [Command] = []
 
     public var version: String?
     public var remoteURLForUpgrade: Foundation.URL?
@@ -29,11 +29,12 @@ public struct CommandRegistry {
         return subcommand
     }
 
-    public func run() {
+    public func run(arguments: [String]? = nil) {
         addVersionFlag()
         do {
-            let parsedArguments = try parse()
-            try process(arguments: parsedArguments)
+            let arguments = arguments ?? Array(ProcessInfo.processInfo.arguments.dropFirst())
+            let parsedArguments = try parse(arguments: arguments)
+            try process(parsedArguments: parsedArguments)
         }
         catch let error as ArgumentParserError {
             Logger.error.log(error.description)
@@ -59,14 +60,13 @@ public struct CommandRegistry {
         }
     }
 
-    private func parse() throws -> ArgumentParser.Result {
-        let arguments = Array(ProcessInfo.processInfo.arguments.dropFirst())
+    func parse(arguments: [String]) throws -> ArgumentParser.Result {
         return try parser.parse(arguments)
     }
 
-    private func process(arguments: ArgumentParser.Result) throws {
+    func process(parsedArguments: ArgumentParser.Result) throws {
         // Handle '--version' flag
-        if let version = version, try arguments.get("--version") == true {
+        if let version = version, try parsedArguments.get("--version") == true {
             Logger.standard.log(version)
             return
         }
@@ -81,7 +81,7 @@ public struct CommandRegistry {
         var parser = self.parser
         var commands = self.commands
         var command: Command?
-        while let commandName = arguments.subparser(parser), let match = commands.first(where: { $0.command == commandName }) {
+        while let commandName = parsedArguments.subparser(parser), let match = commands.first(where: { $0.command == commandName }) {
             parser = match.subparser
             commands = match.subcommands
             command = match
@@ -89,11 +89,48 @@ public struct CommandRegistry {
 
         // Execute command, if any, otherwise print usage
         if let command = command {
-            try command.run(with: arguments)
+            try command.run(with: parsedArguments)
         }
         else {
             parser.printUsage(on: stdoutStream)
         }
     }
 
+}
+
+// MARK: Sugar syntax
+
+class SugarCommand: Command {
+    let command: String
+    let overview: String
+    let subparser: ArgumentParser
+    var subcommands: [Command] = []
+    let handler: ([String]) throws -> Void
+    let positionalArguments: PositionalArgument<[String]>
+
+    init(parser: ArgumentParser, command: String, overview: String,
+         handler: @escaping ([String]) throws -> Void) {
+        self.command = command
+        self.overview = overview
+        self.handler = handler
+        subparser = parser.add(subparser: command, overview: overview)
+        positionalArguments = subparser.add(positional: "params", kind: [String].self,
+                                            optional: true, usage: "Additional parameters")
+    }
+
+    required init(parser: ArgumentParser) {
+        fatalError("Not supported")
+    }
+
+    func run(with arguments: ArgumentParser.Result) throws {
+        try handler(arguments.get(positionalArguments) ?? [])
+    }
+}
+
+extension CommandRegistry {
+    public mutating func on(command: String, overview: String = "", handler: @escaping ([String]) throws -> Void) rethrows {
+        let sugar = SugarCommand(parser: parser, command: command,
+                                 overview: overview, handler: handler)
+        commands.append(sugar)
+    }
 }

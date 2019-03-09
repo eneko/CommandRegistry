@@ -13,7 +13,7 @@ public protocol Command: class {
 }
 
 extension Command {
-    public func printUsage() {
-        subparser.printUsage(on: stdoutStream)
+    public func printUsage(on stream: OutputByteStream = stdoutStream) {
+        subparser.printUsage(on: stream)
     }
 }
