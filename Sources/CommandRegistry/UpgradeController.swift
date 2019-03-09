@@ -10,17 +10,16 @@ import Basic
 
 final class UpgradeController {
 
-    let session: String
-    let directory: String
+    private let directory: String
 
     init() {
-        session = UUID().uuidString
-        directory = ".\(session)"
+        directory = "/tmp/\(UUID().uuidString)"
     }
 
     func upgradeToLatestRelease(repoURL: URL) throws {
         try execute(command: "mkdir", directory)
         try execute(command: "git", "clone", repoURL.absoluteString, directory)
+        try execute(command: "rm", "-rf", directory)
     }
 
     @discardableResult

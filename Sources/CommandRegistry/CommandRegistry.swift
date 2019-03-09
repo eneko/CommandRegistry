@@ -31,6 +31,7 @@ public struct CommandRegistry {
 
     public func run(arguments: [String]? = nil) {
         addVersionFlag()
+        addUpgradeFlag()
         do {
             let arguments = arguments ?? Array(ProcessInfo.processInfo.arguments.dropFirst())
             let parsedArguments = try parse(arguments: arguments)
@@ -72,7 +73,7 @@ public struct CommandRegistry {
         }
 
         // Handle '--upgrade' flag
-        if let repo = remoteURLForUpgrade, try arguments.get("--upgrade") == true {
+        if let repo = remoteURLForUpgrade, try parsedArguments.get("--upgrade") == true {
             try UpgradeController().upgradeToLatestRelease(repoURL: repo)
             return
         }

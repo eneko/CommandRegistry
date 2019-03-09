@@ -12,8 +12,8 @@ class UpgradeCommandTests: XCTestCase {
 
     func testUpgrade() {
         var program = CommandRegistry(usage: "foo", overview: "bar")
-        program.remoteURLForUpgrade = URL(string: "")
-        program.run()
+        program.remoteURLForUpgrade = URL(string: "https://github.com/eneko/CommandRegistry")
+        program.run(arguments: ["--upgrade"])
     }
 
 }
