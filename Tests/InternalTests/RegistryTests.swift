@@ -1,16 +1,9 @@
-//
-//  TestUsage.swift
-//  CommandRegistryTests
-//
-//  Created by Eneko Alonso on 3/9/19.
-//
-
 import XCTest
 import Basic
 @testable import CommandRegistry
 @testable import Utility
 
-class UsageTests: XCTestCase {
+class RegistryTests: XCTestCase {
 
     func testParserUsage() {
         let register = CommandRegistry(usage: "usage", overview: "overview")
