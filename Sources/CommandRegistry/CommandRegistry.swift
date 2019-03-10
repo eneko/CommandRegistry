@@ -10,8 +10,8 @@ public struct CommandRegistry {
 
     public var version: String?
 
-    public init(usage: String, overview: String) {
-        parser = ArgumentParser(usage: usage, overview: overview)
+    public init(usage: String, overview: String, toolname: String? = nil) {
+        parser = ArgumentParser(commandName: toolname, usage: usage, overview: overview)
     }
 
     @discardableResult
