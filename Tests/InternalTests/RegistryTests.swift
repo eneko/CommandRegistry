@@ -17,12 +17,20 @@ class RegistryTests: XCTestCase {
 
     func testPrintUsage() {
         let stream = BufferedOutputByteStream()
+<<<<<<< HEAD
         let register = CommandRegistry(usage: "usage", overview: "overview")
+=======
+        let register = CommandRegistry(usage: "usage", overview: "overview", toolname: "mytool")
+>>>>>>> master
         register.parser.printUsage(on: stream)
         let expectation = """
         OVERVIEW: overview
 
+<<<<<<< HEAD
         USAGE: xctest usage
+=======
+        USAGE: mytool usage
+>>>>>>> master
 
         """
         XCTAssertEqual(stream.bytes.asString, expectation)

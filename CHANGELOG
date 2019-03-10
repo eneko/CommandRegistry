@@ -8,10 +8,26 @@
 - None
 
 
+# 0.3.0
+
+### Updates
+- Syntax sugar commands for simple commandline applications
+	```swift
+	import CommandRegistry
+	let program = CommmandRegistry(usage: "<subcommand> <options>", 
+                                   overview: "My tool")
+	program.on(command: "foo") { params in
+		print(params)
+	}
+	program.run()
+	```
+
+
 # 0.2.0
 
 ### Updates
 - Out-of-the-box --version command (#2)
+
 
 # 0.1.0
 
