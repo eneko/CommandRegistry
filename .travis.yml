@@ -50,13 +50,12 @@ jobs:
       osx_image: xcode10.1
       script:
       - swift test --parallel
-# Disable until command is merged into master
-#     - stage: Continuous Integration
-#       name: TestTool Tests
-#       os: osx
-#       osx_image: xcode10
-#       script:
-#       - cd Tests/TestTool && swift test
+    - stage: Continuous Integration
+      name: TestTool Tests
+      os: osx
+      osx_image: xcode10
+      script:
+      - cd Tests/TestTool && swift test
     - stage: Continuous Integration
       name: Code Coverage (Swift 4.1)
       os: osx
