@@ -5,13 +5,13 @@ import Logger
 
 public struct CommandRegistry {
 
-    private let parser: ArgumentParser
-    private var commands: [Command] = []
+    let parser: ArgumentParser
+    var commands: [Command] = []
 
     public var version: String?
 
-    public init(usage: String, overview: String) {
-        parser = ArgumentParser(usage: usage, overview: overview)
+    public init(usage: String, overview: String, toolname: String? = nil) {
+        parser = ArgumentParser(commandName: toolname, usage: usage, overview: overview)
     }
 
     @discardableResult
@@ -28,11 +28,12 @@ public struct CommandRegistry {
         return subcommand
     }
 
-    public func run() {
+    public func run(arguments: [String]? = nil) {
         addVersionFlag()
         do {
-            let parsedArguments = try parse()
-            try process(arguments: parsedArguments)
+            let arguments = arguments ?? Array(ProcessInfo.processInfo.arguments.dropFirst())
+            let parsedArguments = try parse(arguments: arguments)
+            try process(parsedArguments: parsedArguments)
         }
         catch let error as ArgumentParserError {
             Logger.error.log(error.description)
@@ -52,14 +53,13 @@ public struct CommandRegistry {
         }
     }
 
-    private func parse() throws -> ArgumentParser.Result {
-        let arguments = Array(ProcessInfo.processInfo.arguments.dropFirst())
+    func parse(arguments: [String]) throws -> ArgumentParser.Result {
         return try parser.parse(arguments)
     }
 
-    private func process(arguments: ArgumentParser.Result) throws {
+    func process(parsedArguments: ArgumentParser.Result) throws {
         // Check for default option flags
-        if let version = version, try arguments.get("--version") == true {
+        if let version = version, try parsedArguments.get("--version") == true {
             Logger.standard.log(version)
             return
         }
@@ -68,7 +68,7 @@ public struct CommandRegistry {
         var parser = self.parser
         var commands = self.commands
         var command: Command?
-        while let commandName = arguments.subparser(parser), let match = commands.first(where: { $0.command == commandName }) {
+        while let commandName = parsedArguments.subparser(parser), let match = commands.first(where: { $0.command == commandName }) {
             parser = match.subparser
             commands = match.subcommands
             command = match
@@ -76,7 +76,7 @@ public struct CommandRegistry {
 
         // Execute command, if any, otherwise print usage
         if let command = command {
-            try command.run(with: arguments)
+            try command.run(with: parsedArguments)
         }
         else {
             parser.printUsage(on: stdoutStream)

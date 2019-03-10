@@ -1,8 +1,10 @@
 import XCTest
 
-import CommandRegistryTests
+import PublicTests
+import InternalTests
 
 var tests = [XCTestCaseEntry]()
+tests += PublicTests.__allTests()
+tests += InternalTests.__allTests()
 
-tests += CommandRegistryTests.allTests()
 XCTMain(tests)
