@@ -34,7 +34,7 @@ program.run()
 ### Define your subcommands as classes or structs ⌨️
 
 ```swift
-import Utility
+import SPMUtility
 import CommandRegistry
 
 class CommandA: Command {
@@ -71,7 +71,7 @@ program.run()
 ```
 
 ```swift
-import Utility
+import SPMUtility
 import CommandRegistry
 
 class CommandB: Command {
@@ -162,7 +162,7 @@ dependencies([
 .target(name: "mytool", dependencies: ["CommandRegistry", "Utility"]),
 ```
 
-3. Add `import CommandRegistry` and `import Utility` in your source files, as needed.
+3. Add `import CommandRegistry` and `import SPMUtility` in your source files, as needed.
 
 ## Why yet another argument and command parsing library? 🤔
 When I started writing command line tools in Swift using Swift Package Manager, I found several packages that provided functionality to parse command line arguments, flags and subcommands. However, I found these libraries complex and hard to use.

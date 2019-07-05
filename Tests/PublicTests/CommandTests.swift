@@ -24,7 +24,7 @@ final class CommandTests: XCTestCase {
         OVERVIEW: foo
 
         """
-        XCTAssertEqual(stream.bytes.asString, expectation)
+        XCTAssertEqual(stream.bytes.description, expectation)
     }
 }
 

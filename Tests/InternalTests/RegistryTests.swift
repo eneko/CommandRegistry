@@ -1,7 +1,7 @@
 import XCTest
 import Basic
+@testable import SPMUtility
 @testable import CommandRegistry
-@testable import Utility
 
 class RegistryTests: XCTestCase {
 
@@ -25,7 +25,7 @@ class RegistryTests: XCTestCase {
         USAGE: mytool usage
 
         """
-        XCTAssertEqual(stream.bytes.asString, expectation)
+        XCTAssertEqual(stream.bytes.description, expectation)
     }
 
 }

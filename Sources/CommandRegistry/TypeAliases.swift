@@ -1,5 +1,5 @@
 import Foundation
-import Utility
+import SPMUtility
 
-public typealias ArgumentParser = Utility.ArgumentParser
-public typealias PositionalArgument = Utility.PositionalArgument
+public typealias ArgumentParser = SPMUtility.ArgumentParser
+public typealias PositionalArgument = SPMUtility.PositionalArgument
