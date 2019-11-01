@@ -33,19 +33,7 @@ jobs:
       script:
       - swift test --parallel
     - stage: Continuous Integration
-      name: macOS Swift 5.0
-      os: osx
-      osx_image: xcode103
-      script:
-      - swift test --parallel
-    - stage: Continuous Integration
       name: macOS Swift 5.1
-      os: osx
-      osx_image: xcode10
-      script:
-      - swift test --parallel
-    - stage: Continuous Integration
-      name: macOS Swift 5.0
       os: osx
       osx_image: xcode11
       script:
@@ -53,13 +41,13 @@ jobs:
     - stage: Continuous Integration
       name: TestTool Tests
       os: osx
-      osx_image: xcode10
+      osx_image: xcode10.3
       script:
       - cd Tests/TestTool && swift test
     - stage: Continuous Integration
       name: Code Coverage (Swift 5.0)
       os: osx
-      osx_image: xcode9.3
+      osx_image: xcode10.3
       script:
       - swift package generate-xcodeproj --enable-code-coverage
       - xcodebuild -scheme CommandRegistry-Package test
