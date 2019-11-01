@@ -6,6 +6,7 @@
 build/
 DerivedData/
 *.xcodeproj
+.swiftpm
 
 ## Various settings
 *.pbxuser

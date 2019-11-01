@@ -3,51 +3,51 @@ language: generic
 jobs:
   include:
     - stage: Continuous Integration
-      name: Linux Swift 4.1
+      name: Linux Swift 5.0
       os: linux
       dist: trusty
       sudo: required
       install:
       - eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
-      - swiftenv install 4.1
-      - swiftenv local 4.1
+      - swiftenv install 5.0
+      - swiftenv local 5.0
       - swift --version
       script:
       - swift test --parallel
     - stage: Continuous Integration
-      name: Linux Swift 4.2
+      name: Linux Swift 5.1
       os: linux
       dist: trusty
       sudo: required
       install:
       - eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
-      - swiftenv install 4.2
-      - swiftenv local 4.2
+      - swiftenv install 5.1
+      - swiftenv local 5.1
       - swift --version
       script:
       - swift test --parallel
     - stage: Continuous Integration
-      name: macOS Swift 4.1
+      name: macOS Swift 5.0
       os: osx
-      osx_image: xcode9.3
+      osx_image: xcode10.3
       script:
       - swift test --parallel
     - stage: Continuous Integration
-      name: macOS Swift 4.1.2
+      name: macOS Swift 5.0
       os: osx
-      osx_image: xcode9.4
+      osx_image: xcode103
       script:
       - swift test --parallel
     - stage: Continuous Integration
-      name: macOS Swift 4.2
+      name: macOS Swift 5.1
       os: osx
       osx_image: xcode10
       script:
       - swift test --parallel
     - stage: Continuous Integration
-      name: macOS Swift 4.2.1
+      name: macOS Swift 5.0
       os: osx
-      osx_image: xcode10.1
+      osx_image: xcode11
       script:
       - swift test --parallel
     - stage: Continuous Integration
@@ -57,7 +57,7 @@ jobs:
       script:
       - cd Tests/TestTool && swift test
     - stage: Continuous Integration
-      name: Code Coverage (Swift 4.1)
+      name: Code Coverage (Swift 5.0)
       os: osx
       osx_image: xcode9.3
       script:
