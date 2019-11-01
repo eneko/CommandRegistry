@@ -1,4 +1,4 @@
-import Utility
+import SPMUtility
 import CommandRegistry
 
 class CommandA: Command {
