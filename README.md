@@ -31,10 +31,9 @@ program.register(command: CommandA.self)
 program.run()
 ```
 
-### Define your subcommands as classes or structs ⌨️
+### Define your subcommands ⌨️
 
 ```swift
-import SPMUtility
 import CommandRegistry
 
 class CommandA: Command {
@@ -55,7 +54,7 @@ class CommandA: Command {
 ```
 
 ```
-$ mytool commandA
+$ swift run mytool commandA
 This is CommandA
 ```
 
