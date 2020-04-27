@@ -20,6 +20,11 @@ SUBCOMMANDS:
   commandB     Does something awesome in a different way
 ```
 
+### ⚠️ Deprecation Notice ⚠️
+
+This package will be no longer maintained. If you were using it in one of your projects, I recommend you switch to the official [Swift Argument Parser](https://github.com/apple/swift-argument-parser) package maintained by Apple.
+
+
 ## Usage 🛠
 Keep your `main.swift` nice and tidy:
 
